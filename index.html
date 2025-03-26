@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results panel</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome! Fill in your measurements results below</h1>
+      <br />
+
+      <form action="save_result.php" method="POST" class="form">
+        <div class="input-group">
+          <label>Username:</label>
+          <input type="text" name="username" placeholder="Username" required />
+        </div>
+
+        <div class="input-group">
+          <label>Device:</label>
+          <input type="text" name="device" placeholder="Used device" required />
+        </div>
+
+        <div class="input-group">
+          <label>Measurement value:</label>
+          <input
+            type="number"
+            name="value"
+            placeholder="Measured value"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <label>Date:</label>
+          <input type="date" name="date" required />
+        </div>
+
+        <div class="input-group">
+          <label>Result accepted?:</label>
+          <select name="result_evaluation">
+            <option value="passed">Passed</option>
+            <option value="failed">Failed</option>
+            <option value="investigation">Under investigation</option>
+          </select>
+        </div>
+
+        <input type="submit" class="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+</html>
