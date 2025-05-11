@@ -11,7 +11,9 @@
       <h1>Welcome! Fill in your measurements results below</h1>
       <br />
 
-      <form action="save_result.php" method="POST" class="form">
+      <div id="message" class="message-hidden"></div>
+
+      <form method="POST" class="form" id="measurementForm">
         <div class="input-group">
           <label>Username:</label>
           <input type="text" name="username" placeholder="Username" required />
@@ -27,6 +29,7 @@
           <input
             type="number"
             name="value"
+            step="0.00001"
             placeholder="Measured value"
             required
           />

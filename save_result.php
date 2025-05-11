@@ -29,7 +29,7 @@
     $result = $stmt->get_result();
 
     if ($row = $result->fetch_assoc()) {
-        $device = $row["id"];
+        $device_id = $row["id"];
     } else {
         $stmt = $conn->prepare("INSERT INTO device (name, description, unit) VALUES (?, '', '')");
         $stmt->bind_param("s", $device);
@@ -38,11 +38,16 @@
     }
 
     $stmt = $conn->prepare("INSERT INTO measurements (user_id, device_id, value, date) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("iids", $user_id, $device_id, $value, $date);
+    $stmt->bind_param("iiss", $user_id, $device_id, $value, $date);
     $stmt->execute();
 
-    echo "<p> Result was saved in the database.</p>";
+    echo "Result was saved in the database.";
 
     $conn->close();
+
+    # For error cheking
+    ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+
 
 ?>
