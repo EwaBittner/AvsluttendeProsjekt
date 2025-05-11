@@ -73,6 +73,9 @@ input[type="submit"]:hover,
 }
 
 .chart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 90%;
   height: 500px;
   padding: 50px;

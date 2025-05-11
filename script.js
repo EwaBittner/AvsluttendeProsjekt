@@ -1,3 +1,5 @@
+let chartInstance = null;
+
 const ctx = document.getElementById("myChart");
 
 fetch("chart.php")
@@ -9,7 +11,11 @@ fetch("chart.php")
   });
 
 function createChart(chartData, type) {
-  new Chart(ctx, {
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
+
+  chartInstance = new Chart(ctx, {
     type: type,
     data: {
       labels: chartData.map((row) => row.date),
@@ -31,6 +37,14 @@ function createChart(chartData, type) {
   });
 }
 
+function refreshChart() {
+  fetch("chart.php")
+    .then((response) => response.json())
+    .then((data) => {
+      createChart(data, "line");
+    });
+}
+
 document
   .getElementById("measurementForm")
   .addEventListener("submit", async (e) => {
@@ -49,9 +63,13 @@ document
 
       console.log(result);
 
-      messageDiv.textContent = result.includes("saved")
-        ? "Result saved successfully!"
-        : "Failed to save result";
+      if (result.includes("saved")) {
+        messageDiv.textContent = "Result saved successfully!";
+        refreshChart(); // <-- DODAJ TO TU
+      } else {
+        messageDiv.textContent = "Failed to save result";
+      }
+
       messageDiv.className = "message-visible";
 
       setTimeout(() => {
@@ -64,11 +82,3 @@ document
       messageDiv.className = "message-visible";
     }
   });
-
-// Debugging
-fetch("save_result.php", {
-  method: "POST",
-  body: formData,
-})
-  .then((response) => response.text()) // zmienione z .json()
-  .then((result) => console.log(result)); // tymczasowo
